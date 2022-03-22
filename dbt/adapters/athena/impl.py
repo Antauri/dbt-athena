@@ -75,6 +75,10 @@ class AthenaAdapter(SQLAdapter):
                 s3_bucket.objects.filter(Prefix=prefix).delete()
 
     @available
+    def unique_temp_table_suffix(self, suffix_initial="__dbt_tmp", length=8):
+        return f"{suffix_initial}_{str(uuid4())[:length]}"
+                
+    @available
     def clean_up_table(
         self, database_name: str, table_name: str
     ):
